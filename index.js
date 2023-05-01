@@ -356,7 +356,7 @@ app.get('/members', requireAuth, (req, res) => {
     const catGifs = {
         '1': '/fluffy.gif',
         '2': '/socks.gif',
-        '3': 'baby.gif',
+        '3': '/baby.gif',
     };
     const catGif = catGifs[randomCatId];
 
