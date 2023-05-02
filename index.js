@@ -345,20 +345,19 @@ app.post('/loginsubmit', async (req, res) => {
 
 app.get('/members', requireAuth, (req, res) => {
     const { name } = req.session;
-    const catIds = ['1', '2', '3'];
+    const catIds = ['1', '2', '4'];
     const randomCatId = catIds[Math.floor(Math.random() * catIds.length)];
     const catNames = {
-        '1': 'fluffy',
-        '2': 'socks',
-        '3': 'baby',
+        '1': 'Fluffy',
+        '2': 'Socks',
+        '4': 'Baby'
     };
     const catName = catNames[randomCatId];
     const catGifs = {
-        '1': '/public/fluffy.gif',
-        '2': '/public/socks.gif',
-        '3': '/public/baby.gif',
-      };
-      
+        '1': '/fluffy.gif',
+        '2': '/socks.gif',
+        '4': '/baby.gif'
+    };
     const catGif = catGifs[randomCatId];
 
     res.send(`
@@ -369,6 +368,31 @@ app.get('/members', requireAuth, (req, res) => {
       </form>
     `);
 });
+
+app.get('/cat/:id', (req, res) => {
+    const catIds = ['1', '2', '4'];
+    const catId = req.params.id;
+
+    if (catIds.includes(catId)) {
+        const catNames = {
+            '1': 'Fluffy',
+            '2': 'Socks',
+            '4': 'Baby'
+        };
+        const catName = catNames[catId];
+        const catGifs = {
+            '1': '/fluffy.gif',
+            '2': '/socks.gif',
+            '4': '/baby.gif'
+        };
+        const catGif = catGifs[catId];
+
+        res.send(`${catName}: <img src='${catGif}' style='width:250px;'>`);
+    } else {
+        res.send(`Invalid cat id: ${catId}`);
+    }
+});
+
 
 
 app.get('/loggedin', (req,res) => {
@@ -402,29 +426,6 @@ function requireAuth(req, res, next) {
     }
 }
 
-app.get('/cat/:id', (req, res) => {
-    const catIds = ['1', '2', '3'];
-    const catId = req.params.id;
-
-    if (catIds.includes(catId)) {
-        const catNames = {
-            '1': 'Fluffy',
-            '2': 'Socks',
-            '3': 'Baby'
-        };
-        const catName = catNames[catId];
-        const catGifs = {
-            '1': '/public/fluffy.gif',
-            '2': '/public/socks.gif',
-            '3': '/public/baby.gif'
-        };
-        const catGif = catGifs[catId];
-
-        res.send(`${catName}: <img src='${catGif}' style='width:250px;'>`);
-    } else {
-        res.send(`Invalid cat id: ${catId}`);
-    }
-});
 
 
 
